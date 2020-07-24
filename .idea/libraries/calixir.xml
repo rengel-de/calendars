@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="calixir" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/calixir/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/test/lib/calixir/ebin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/calixir/lib" />
+    </SOURCES>
+  </library>
+</component>
