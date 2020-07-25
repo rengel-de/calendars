@@ -30,6 +30,18 @@ Documentation has been generated with [ExDoc](https://github.com/elixir-lang/ex_
 and published on [HexDocs](https://hexdocs.pm). The docs can be found 
 at [https://hexdocs.pm/calendars](https://hexdocs.pm/calendars).
 
+## Copyright and License
+
+The Calixir library and its sample data are made public under the following conditions:
+
+- The code and data can be used for personal use.
+- The code can data be used for demonstrations purposes.
+- Non-profit reuse with attribution is fine.
+- Commercial use of the algorithms should be licensed and are not allowed from this library.
+
+The permissions above are granted **as long as attribution is given to the authors of the 
+original algorithms, Nachum Dershowitz and Edward M. Reingold**.
+
 ## About the Calendars
 
 In this software, I distinguish __monotonous__ and __cyclical__ 

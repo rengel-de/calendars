@@ -4,7 +4,7 @@ defmodule Calendars.MixProject do
   def project do
     [
       app: :calendars,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -31,12 +31,9 @@ defmodule Calendars.MixProject do
 
   defp description() do
     """
-    Calendars is a thin wrapper around Calixir,
+    Calendars is a collection of calendars based on Calixir,
     the port of the Lisp calendar software calendrica-4.0.cl
     by Nachum Dershowitz and Edward M. Reingold to Elixir.
-    It implements various calendars and provides functions for
-    an easy conversion of dates of one calendar into the
-    correspondig dates of another calendar.
     """
   end
 
