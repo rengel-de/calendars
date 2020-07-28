@@ -214,7 +214,7 @@ defmodule PipelineConverter do
 end
 ``` 
 
-Of course, this works for any pair of monotonous calendars.
+Of course, this works for any combination of monotonous calendars.
 
 
   
