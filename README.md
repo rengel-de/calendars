@@ -185,8 +185,8 @@ defmodule PipelineConverter do
         |> Julian.from_fixed
         |> Julian.to_fixed
         |> Gregorian.from_fixed) == gregorian_date,
-    do:   {:ok, "Pipline works."},
-    else: {:error, "Pipline is broken."}   
+    do:   {:ok, "Pipeline works."},
+    else: {:error, "Pipeline is broken."}   
   end
 
   def check_pipeline_using_from_date do
@@ -196,8 +196,8 @@ defmodule PipelineConverter do
         |> Julian.from_date(Gregorian)
         |> Hebrew.from_date(Julian)
         |> Gregorian.from_Hebrew()) == gregorian_date,
-    do:   {:ok, "Pipline works."},
-    else: {:error, "Pipline is broken."}   
+    do:   {:ok, "Pipeline works."},
+    else: {:error, "Pipeline is broken."}   
   end
 
   def check_pipeline_using_to_date do
@@ -207,8 +207,8 @@ defmodule PipelineConverter do
         |> Gregorian.to_date(Julian)
         |> Julian.to_date(Hebrew)
         |> Hebrew.to_date(Gregorian)) == gregorian_date,
-    do:   {:ok, "Pipline works."},
-    else: {:error, "Pipline is broken."}   
+    do:   {:ok, "Pipeline works."},
+    else: {:error, "Pipeline is broken."}   
   end
 
 end
