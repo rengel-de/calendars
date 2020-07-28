@@ -172,10 +172,10 @@ end
 ```
 Using a pipeline:
 
-```èlixir
+```elixir
 defmodule PipelineConverter do
 
-  alias Calendars.{Gregorian, Julian}
+  alias Calendars.{Gregorian, Julian, Hebrew}
 
   def check_pipeline do
     gregorian_date = Gregorian.date(2020, 7, 24)
@@ -188,6 +188,29 @@ defmodule PipelineConverter do
     do:   {:ok, "Pipline works."},
     else: {:error, "Pipline is broken."}   
   end
+
+  def check_pipeline_using_from_date do
+    gregorian_date = Gregorian.date(2020, 7, 28)
+    
+    if (gregorian_date
+        |> Julian.from_date(Gregorian)
+        |> Hebrew.from_date(Julian)
+        |> Gregorian.from_Hebrew()) == gregorian_date,
+    do:   {:ok, "Pipline works."},
+    else: {:error, "Pipline is broken."}   
+  end
+
+  def check_pipeline_using_to_date do
+    gregorian_date = Gregorian.date(2020, 7, 28)
+    
+    if (gregorian_date
+        |> Gregorian.to_date(Julian)
+        |> Julian.to_date(Hebrew)
+        |> Hebrew.to_date(Gregorian)) == gregorian_date,
+    do:   {:ok, "Pipline works."},
+    else: {:error, "Pipline is broken."}   
+  end
+
 end
 ``` 
 
