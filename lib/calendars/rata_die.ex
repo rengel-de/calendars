@@ -43,7 +43,7 @@ defmodule Calendars.RataDie do
   Converts the Julian Day number `jd` into the corresponding RataDie date.
   """
   def from_jd(jd) do
-    jd |> Calixir.fixed_from_jd |> from_fixed
+    jd |> Calixir.fixed_from_jd
   end
 
   @doc """
@@ -61,10 +61,10 @@ defmodule Calendars.RataDie do
   def to_fixed(rd_date), do: rd_date
 
   @doc """
-  Converts `jd_date` into the corresponding Julian Day number.
+  Converts `rd_date` into the corresponding Julian Day number.
   """
-  def to_jd(jd_date) do
-    jd_date |> to_fixed |> Calixir.jd_from_fixed
+  def to_jd(rd_date) do
+    rd_date |> Calixir.jd_from_fixed
   end
 
 end

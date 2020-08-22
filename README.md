@@ -217,4 +217,14 @@ end
 Of course, this works for any combination of monotonous calendars.
 
 
+## Changelog
+
+### 0.1.3
+- Fixed docs in RataDie calendar.
+- Fixed `from_jd` and `to_jd` functions in in RataDie calendar.
+- Added  `is_leap?` and `days_in_month` functions to Gregorian calendar. 
+- Added  `is_leap?` and `days_in_month` functions to Julian calendar.
+ 
+
+
   

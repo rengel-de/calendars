@@ -23,6 +23,16 @@ defmodule Calendars.Julian do
   def epoch, do: Calixir.julian_epoch()
 
   @doc """
+  Returns the number of days in the month of `_julian_date`.
+  """
+  def days_in_month({year, 2, _day} = _julian_date), do: is_leap?(year) && 29 || 28
+  def days_in_month({_year, 4, _day} = _julian_date), do: 30
+  def days_in_month({_year, 6, _day} = _julian_date), do: 30
+  def days_in_month({_year, 9, _day} = _julian_date), do: 30
+  def days_in_month({_year, 11, _day} = _julian_date), do: 30
+  def days_in_month({_year, _, _day} = _julian_date), do: 31
+
+  @doc """
   Converts `source_calendar_date` of the `source_calendar` into the
   corresponding Julian date.
   """
@@ -42,6 +52,20 @@ defmodule Calendars.Julian do
   """
   def from_jd(jd) do
     jd |> Calixir.fixed_from_jd |> from_fixed
+  end
+
+  @doc """
+  Returns true if the year of `_julian_date` is a Julian leap year.
+  """
+  def is_leap?({year, _month, _day}= _julian_date) do
+    Calixir.gregorian_leap_year?(year)
+  end
+
+  @doc """
+  Returns true if the given `year` is a Julian leap year.
+  """
+  def is_leap?(year) do
+    Calixir.julian_leap_year?(year)
   end
 
   @doc """
