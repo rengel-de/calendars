@@ -7,6 +7,32 @@ defmodule Calendars.Hebrew do
   @typep day   :: 1..30
   @type  t     :: {year, month, day}
 
+  # Source: http://www.yashanet.com/library/hebrew-days-and-months.html
+  @months [
+    "Nisan",
+    "Iyyar",
+    "Sivan",
+    "Tammuz",
+    "Av",
+    "Elul",
+    "Tishri",
+    "Kheshvan",
+    "Kislev",
+    "Tevet",
+    "Shevat",
+    "Adar",
+    "Adar II"]
+
+  # Source: http://www.israelhebrew.com/days-of-the-week-in-hebrew/
+  @weekdays [
+    "Yom Rishon", "Yom Sheni", "Yom Shlishi", "Yom Rvi-ee",
+    "Yom Chamishi", "Yom Shishi", "Shabbat"]
+
+  # Source: http://www.yashanet.com/library/hebrew-days-and-months.html
+  @weekdays_alt [
+    "Yom Reeshone", "Yom Shaynee", "Yom Shlee´shee", "Yom Revee´ee",
+    "Yom Khah´mee´shee", "Yom Shee´shee", "Shabbat"]
+
   @doc """
   Returns the keyword used to access data in the DR4 sample data.
   """
@@ -119,5 +145,15 @@ defmodule Calendars.Hebrew do
   Yom Kippur.
   """
   defdelegate yom_kippur(g_year), to: Calixir
+
+  @doc """
+  Returns the names of the Hebrew months as list.
+  """
+  def month_names_as_list(), do: @months
+
+  @doc """
+  Returns the names of the Hebrew weekdays as list.
+  """
+  def day_names_as_list(), do: @weekdays
 
 end

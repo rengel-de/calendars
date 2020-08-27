@@ -219,6 +219,19 @@ Of course, this works for any combination of monotonous calendars.
 
 ## Changelog
 
+### 0.1.4
+- Added function `today_as_date` to Gregorian.
+- Added function `start_of_year_as_date` to Gregorian.
+- Added function `end_of_year_as_date` to Gregorian.
+- Added function `start_of_month_as_date` to Gregorian.
+- Added function `end_of_month_as_date` to Gregorian.
+- Added function `start_of_week_as_date` to Gregorian.
+- Added function `end_of_week_as_date` to Gregorian.
+- Added function `month_names_as_list` to Gregorian.
+- Added function `day_names_as_list` to Gregorian.
+- Added function `month_names_as_list` to Hebrew.
+- Added the corresponding tests.
+
 ### 0.1.3
 - Fixed docs in RataDie calendar.
 - Fixed `from_jd` and `to_jd` functions in in RataDie calendar.

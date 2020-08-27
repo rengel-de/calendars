@@ -7,6 +7,15 @@ defmodule Calendars.Gregorian do
   @typep day   :: 1..31
   @type  t     :: {year, month, day}
 
+  @months [
+    "January", "February", "March", "April", "May", "June", "Juli", "August",
+    "September", "October", "November", "December"
+  ]
+
+  @weekdays [
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+  ]
+
   @doc """
   Returns the keyword used to access data in the DR4 sample data.
   """
@@ -155,6 +164,58 @@ defmodule Calendars.Gregorian do
   # === Additional Functions
 
   @doc """
+  Returns end of the current year as a Gregorian date.
+  """
+  def end_of_month_as_date({year, month, day} = g_date) do
+    days = days_in_month_of_date(g_date)
+    {year, month, days}
+  end
+
+  @doc """
+  Returns end of the current week as a Gregorian date.
+  """
+  def end_of_week_as_date({year, month, day} = g_date) do
+    fixed = to_fixed(g_date)
+    day_of_week = Calixir.day_of_week_from_fixed(fixed)
+    from_fixed(fixed + 6 - day_of_week)
+  end
+
+  @doc """
+  Returns end of the current year as a Gregorian date.
+  """
+  def end_of_year_as_date({year, month, day} = g_date) do
+    {year, 12, 31}
+  end
+
+  @doc """
+  Returns start of the current year as a Gregorian date.
+  """
+  def start_of_month_as_date({year, month, day} = g_date) do
+    {year, month, 1}
+  end
+
+  @doc """
+  Returns start of the current week as a Gregorian date.
+  """
+  def start_of_week_as_date({year, month, day} = g_date) do
+    fixed = to_fixed(g_date)
+    day_of_week = Calixir.day_of_week_from_fixed(fixed)
+    from_fixed(fixed - day_of_week)
+  end
+
+  @doc """
+  Returns start of the current year as a Gregorian date.
+  """
+  def start_of_year_as_date({year, month, day} = g_date) do
+    {year, 1, 1}
+  end
+
+  @doc """
+  Returns the date of today.
+  """
+  def today_as_date(), do: Date.utc_today() |> Date.to_erl()
+
+  @doc """
   Returns true, if `g_year` is a leap year.
   """
   defdelegate leap_year?(g_year), to: Calixir, as: :gregorian_leap_year?
@@ -250,5 +311,15 @@ defmodule Calendars.Gregorian do
   def days_in_quarter_of_fixed(fixed) do
     fixed |> from_fixed |> days_in_quarter_of_date
   end
+
+  @doc """
+  Returns the English names of the months as list.
+  """
+  def month_names_as_list(), do: @months
+
+  @doc """
+  Returns the English names of the weekdays as list.
+  """
+  def day_names_as_list(), do: @weekdays
 
 end
