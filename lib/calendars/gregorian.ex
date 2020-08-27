@@ -213,6 +213,7 @@ defmodule Calendars.Gregorian do
   @doc """
   Returns the date of today.
   """
+  def today_as_date(_g_date), do: Date.utc_today() |> Date.to_erl()
   def today_as_date(), do: Date.utc_today() |> Date.to_erl()
 
   @doc """
