@@ -176,56 +176,61 @@ defmodule Calendars.Gregorian do
   # === Additional Functions
 
   @doc """
-  Returns end of the current year as a Gregorian date.
+  Returns end of the current month as a fixed date.
   """
-  def end_of_month_as_date({year, month, day} = g_date) do
+  def end_of_month({year, month, day} = g_date) do
     days = days_in_month_of_date(g_date)
-    {year, month, days}
+    to_fixed({year, month, days})
   end
 
   @doc """
-  Returns end of the current week as a Gregorian date.
+  Returns end of the current week as a fixed date.
   """
-  def end_of_week_as_date({year, month, day} = g_date) do
+  def end_of_week({year, month, day} = g_date) do
     fixed = to_fixed(g_date)
     day_of_week = Calixir.day_of_week_from_fixed(fixed)
-    from_fixed(fixed + 6 - day_of_week)
+    fixed + 6 - day_of_week
   end
 
   @doc """
-  Returns end of the current year as a Gregorian date.
+  Returns end of the current year as a fixed date.
   """
-  def end_of_year_as_date({year, month, day} = g_date) do
-    {year, 12, 31}
+  def end_of_year({year, month, day} = g_date) do
+    to_fixed({year, 12, 31})
   end
 
   @doc """
-  Returns start of the current year as a Gregorian date.
+  Returns start of the current year as a fixed date.
   """
-  def start_of_month_as_date({year, month, day} = g_date) do
-    {year, month, 1}
+  def start_of_month({year, month, day} = g_date) do
+    to_fixed({year, month, 1})
   end
 
   @doc """
-  Returns start of the current week as a Gregorian date.
+  Returns start of the current week as a fixed date.
   """
-  def start_of_week_as_date({year, month, day} = g_date) do
+  def start_of_week({year, month, day} = g_date) do
     fixed = to_fixed(g_date)
     day_of_week = Calixir.day_of_week_from_fixed(fixed)
-    from_fixed(fixed - day_of_week)
+    fixed - day_of_week
   end
 
   @doc """
-  Returns start of the current year as a Gregorian date.
+  Returns start of the current year as a fixed date.
   """
-  def start_of_year_as_date({year, month, day} = g_date), do: {year, 1, 1}
-  def start_of_year_as_date(year), do: {year, 1, 1}
+  def start_of_year({year, month, day} = g_date) do
+    to_fixed({year, 1, 1})
+  end
+
+  def start_of_year(year) do
+    to_fixed({year, 1, 1})
+  end
 
   @doc """
-  Returns the date of today.
+  Returns the fixed date of today.
   """
-  def today_as_date(_), do: Date.utc_today() |> Date.to_erl()
-  def today_as_date(), do: Date.utc_today() |> Date.to_erl()
+  def today(_), do: Date.utc_today() |> Date.to_erl() |> to_fixed
+  def today(), do: Date.utc_today() |> Date.to_erl() |> to_fixed
 
   @doc """
   Returns true, if `g_year` is a leap year.
