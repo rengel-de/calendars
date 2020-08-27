@@ -219,6 +219,9 @@ Of course, this works for any combination of monotonous calendars.
 
 ## Changelog
 
+### 0.1.5
+- Fixed and renamed `_as_date` functions.
+
 ### 0.1.4
 - Added function `today` to Gregorian.
 - Added function `start_of_year` to Gregorian.
