@@ -69,4 +69,10 @@ defmodule GregorianTest do
     assert Gregorian.end_of_week_as_date({2020, 8, 29}) == {2020, 8, 29}
   end
 
+  test "holidays" do
+    h1 = Gregorian.christmas({2020, 8, 27})
+    h2 = Gregorian.christmas(2020)
+    assert h1 == h2
+  end
+
 end

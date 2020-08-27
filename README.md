@@ -230,6 +230,8 @@ Of course, this works for any combination of monotonous calendars.
 - Added function `month_names_as_list` to Gregorian.
 - Added function `day_names_as_list` to Gregorian.
 - Added function `month_names_as_list` to Hebrew.
+- Added holiday functions to Gregorian.
+- Added holiday functions to Hebrew.
 - Added the corresponding tests.
 
 ### 0.1.3

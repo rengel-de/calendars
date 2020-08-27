@@ -104,61 +104,73 @@ defmodule Calendars.Gregorian do
   @doc """
   Advent Sunday.
   """
+  def advent({g_year, _,  _}), do: advent(g_year)
   defdelegate advent(g_year), to: Calixir
 
   @doc """
   Christmas.
   """
+  def christmas({g_year, _,  _}), do: christmas(g_year)
   defdelegate christmas(g_year), to: Calixir
 
   @doc """
   Easter.
   """
+  def easter({g_year, _,  _}), do: easter(g_year)
   defdelegate easter(g_year), to: Calixir
 
   @doc """
   Epiphany.
   """
+  def epiphany({g_year, _,  _}), do: epiphany(g_year)
   defdelegate epiphany(g_year), to: Calixir
 
   @doc """
   Friday the 13th (first).
   """
+  def unlucky_fridays({g_year, _,  _}), do: unlucky_fridays(g_year)
   defdelegate unlucky_fridays(g_year), to: Calixir
 
   @doc """
   Daylight Saving End.
   """
+  def daylight_saving_end({g_year, _,  _}), do: daylight_saving_end(g_year)
   defdelegate daylight_saving_end(g_year), to: Calixir
 
   @doc """
   Daylight Saving Start.
   """
+  def daylight_saving_start({g_year, _,  _}), do: daylight_saving_start(g_year)
   defdelegate daylight_saving_start(g_year), to: Calixir
 
   @doc """
   Pentecost.
   """
+  def pentecost({g_year, _,  _}), do: pentecost(g_year)
   defdelegate pentecost(g_year), to: Calixir
 
   @doc """
   U.S. Election Day.
   """
+  def election_day({g_year, _,  _}), do: election_day(g_year)
   defdelegate election_day(g_year), to: Calixir
 
   @doc """
   U.S. Independence Day.
   """
+  def independence_day({g_year, _,  _}), do: independence_day(g_year)
   defdelegate independence_day(g_year), to: Calixir
 
   @doc """
   U.S. Labor Day.
   """
+  def labor_day({g_year, _,  _}), do: labor_day(g_year)
   defdelegate labor_day(g_year), to: Calixir
 
   @doc """
   U.S. Memorial Day.
   """
+  def memorial_day({g_year, _,  _}), do: memorial_day(g_year)
   defdelegate memorial_day(g_year), to: Calixir
 
   # === Additional Functions
@@ -206,14 +218,13 @@ defmodule Calendars.Gregorian do
   @doc """
   Returns start of the current year as a Gregorian date.
   """
-  def start_of_year_as_date({year, month, day} = g_date) do
-    {year, 1, 1}
-  end
+  def start_of_year_as_date({year, month, day} = g_date), do: {year, 1, 1}
+  def start_of_year_as_date(year), do: {year, 1, 1}
 
   @doc """
   Returns the date of today.
   """
-  def today_as_date(_g_date), do: Date.utc_today() |> Date.to_erl()
+  def today_as_date(_), do: Date.utc_today() |> Date.to_erl()
   def today_as_date(), do: Date.utc_today() |> Date.to_erl()
 
   @doc """

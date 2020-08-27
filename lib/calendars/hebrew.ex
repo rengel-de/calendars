@@ -99,51 +99,61 @@ defmodule Calendars.Hebrew do
   @doc """
   Birkath Ha Hama.
   """
+  def birkath_ha_hama(g_year, _,  _), do: birkath_ha_hama(g_year)
   defdelegate birkath_ha_hama(g_year), to: Calixir
 
   @doc """
   Birkath Ha Hama (Alt).
   """
+  def alt_birkath_ha_hama(g_year, _,  _), do: alt_birkath_ha_hama(g_year)
   defdelegate alt_birkath_ha_hama(g_year), to: Calixir
 
   @doc """
   Hanukkah.
   """
+  def hanukkah(g_year, _,  _), do: hanukkah(g_year)
   defdelegate hanukkah(g_year), to: Calixir
 
   @doc """
   Passover.
   """
+  def passover(g_year, _,  _), do: passover(g_year)
   defdelegate passover(g_year), to: Calixir
 
   @doc """
   Purim.
   """
+  def purim(g_year, _,  _), do: purim(g_year)
   defdelegate purim(g_year), to: Calixir
 
   @doc """
   Sh'ela.
   """
+  def sh_ela(g_year, _,  _), do: sh_ela(g_year)
   defdelegate sh_ela(g_year), to: Calixir
 
   @doc """
   Ta'anit Esther.
   """
+  def ta_anit_esther(g_year, _,  _), do: ta_anit_esther(g_year)
   defdelegate ta_anit_esther(g_year), to: Calixir
 
   @doc """
   Tisha be-Av.
   """
+  def tishah_be_av(g_year, _,  _), do: tishah_be_av(g_year)
   defdelegate tishah_be_av(g_year), to: Calixir
 
   @doc """
   Yom ha Zikkaron.
   """
+  def yom_ha_zikkaron(g_year, _,  _), do: yom_ha_zikkaron(g_year)
   defdelegate yom_ha_zikkaron(g_year), to: Calixir
 
   @doc """
   Yom Kippur.
   """
+  def yom_kippur(g_year, _,  _), do: yom_kippur(g_year)
   defdelegate yom_kippur(g_year), to: Calixir
 
   @doc """
