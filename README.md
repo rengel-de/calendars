@@ -219,6 +219,9 @@ Of course, this works for any combination of monotonous calendars.
 
 ## Changelog
 
+### 0.1.6
+- Added functions `date_text` to Gregorian, Julian, and Hebrew.
+
 ### 0.1.5
 - Fixed and renamed `_as_date` functions.
 

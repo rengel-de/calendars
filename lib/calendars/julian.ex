@@ -7,6 +7,15 @@ defmodule Calendars.Julian do
   @typep day   :: 1..31
   @type  t     :: {year, month, day}
 
+  @months [
+    "January", "February", "March", "April", "May", "June", "Juli", "August",
+    "September", "October", "November", "December"
+  ]
+
+  @weekdays [
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+  ]
+
   @doc """
   Returns the keyword used to access data in the DR4 sample data.
   """
@@ -113,5 +122,19 @@ defmodule Calendars.Julian do
   Returns true, if `j_year` is a leap year.
   """
   defdelegate leap_year?(j_year), to: Calixir, as: :julian_leap_year?
+
+  @doc """
+  Returns the given `fixed` date or Julian `j_date` as text.
+  """
+  def date_text(fixed) when is_number(fixed) do
+    fixed |> from_fixed |> date_text
+  end
+
+  def date_text({year, month, day} = j_date) do
+    day_of_week = j_date |> to_fixed |> Calendars.DayOfWeek.from_fixed
+    weekday_name = Enum.at(@weekdays, day_of_week)
+    month_name = Enum.at(@months, month - 1)
+    "#{weekday_name}, #{month_name} #{day}, #{year}"
+  end
 
 end

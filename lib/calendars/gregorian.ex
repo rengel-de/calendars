@@ -178,7 +178,7 @@ defmodule Calendars.Gregorian do
   @doc """
   Returns end of the current month as a fixed date.
   """
-  def end_of_month({year, month, day} = g_date) do
+  def end_of_month({year, month, _day} = g_date) do
     days = days_in_month_of_date(g_date)
     to_fixed({year, month, days})
   end
@@ -186,30 +186,30 @@ defmodule Calendars.Gregorian do
   @doc """
   Returns end of the current week as a fixed date.
   """
-  def end_of_week({year, month, day} = g_date) do
+  def end_of_week({_year, _month, _day} = g_date) do
     fixed = to_fixed(g_date)
     day_of_week = Calixir.day_of_week_from_fixed(fixed)
     fixed + 6 - day_of_week
   end
 
   @doc """
-  Returns end of the current year as a fixed date.
+  Returns end of the given year as a fixed date.
   """
-  def end_of_year({year, month, day} = g_date) do
+  def end_of_year({year, _month, _day} = _g_date) do
     to_fixed({year, 12, 31})
   end
 
   @doc """
   Returns start of the current year as a fixed date.
   """
-  def start_of_month({year, month, day} = g_date) do
+  def start_of_month({year, month, _day} = _g_date) do
     to_fixed({year, month, 1})
   end
 
   @doc """
   Returns start of the current week as a fixed date.
   """
-  def start_of_week({year, month, day} = g_date) do
+  def start_of_week({_year, _month, _day} = g_date) do
     fixed = to_fixed(g_date)
     day_of_week = Calixir.day_of_week_from_fixed(fixed)
     fixed - day_of_week
@@ -218,7 +218,7 @@ defmodule Calendars.Gregorian do
   @doc """
   Returns start of the current year as a fixed date.
   """
-  def start_of_year({year, month, day} = g_date) do
+  def start_of_year({year, _month, _day} = _g_date) do
     to_fixed({year, 1, 1})
   end
 
@@ -338,5 +338,19 @@ defmodule Calendars.Gregorian do
   Returns the English names of the weekdays as list.
   """
   def day_names_as_list(), do: @weekdays
+
+  @doc """
+  Returns the given `fixed` date or Gregorian `g_date` as text.
+  """
+  def date_text(fixed) when is_number(fixed) do
+    fixed |> from_fixed |> date_text
+  end
+
+  def date_text({year, month, day} = g_date) do
+    day_of_week = g_date |> to_fixed |> Calendars.DayOfWeek.from_fixed
+    weekday_name = Enum.at(@weekdays, day_of_week)
+    month_name = Enum.at(@months, month - 1)
+    "#{weekday_name}, #{month_name} #{day}, #{year}"
+  end
 
 end

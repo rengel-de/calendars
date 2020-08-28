@@ -166,4 +166,18 @@ defmodule Calendars.Hebrew do
   """
   def day_names_as_list(), do: @weekdays
 
+  @doc """
+  Returns the given `fixed` date or Hebrew `h_date` as text.
+  """
+  def date_text(fixed) when is_number(fixed) do
+    fixed |> from_fixed |> date_text
+  end
+
+  def date_text({year, month, day} = h_date) do
+    day_of_week = h_date |> to_fixed |> Calendars.DayOfWeek.from_fixed
+    weekday_name = Enum.at(@weekdays, day_of_week)
+    month_name = Enum.at(@months, month - 1)
+    "#{weekday_name}, #{month_name} #{day}, #{year}"
+  end
+
 end
