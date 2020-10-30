@@ -10,7 +10,7 @@ defmodule ConversionTest do
   assert date == date |> <calendar>.to_jd |> <calendar>.from_jd
   ```
 
-  for each monotonous calendar against the sample dates contained in DR4.
+  for each monotonic calendar against the sample dates contained in DR4.
 
   To watch some or all intermediate results of the pipelines,
   remove the comment characters of the calendar(s) in question.

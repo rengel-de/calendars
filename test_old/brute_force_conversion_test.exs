@@ -50,7 +50,7 @@ defmodule ConversionTest do
 
   @fixed_dates :jd |> Data.fixed_with |> Enum.map(&(elem(&1, 0)))
 
-  @monotonous_calendars [ # 34 monotonous calendars
+  @monotonous_calendars [ # 34 monotonic calendars
     ArithmeticFrench,
     ArithmeticPersian,
     Armenian,

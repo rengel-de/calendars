@@ -1,76 +1,60 @@
-defmodule Calendars.Islamic do
+defmodule Islamic do
   @moduledoc """
-  Documentation for the Islamic calendar (DR4).
+  The `Islamic` calendar module.
   """
-  @typep year  :: integer
-  @typep month :: 1..12
-  @typep day   :: 1..31
-  @type  t     :: {year, month, day}
+  use Calendars, [
 
-  @doc """
-  Returns the keyword used to access data in the DR4 sample data.
-  """
-  def keyword, do: :islamic
+    fields: [
+      year: integer,
+      month: 1..12,
+      day: 29..30
+    ],
 
-  @doc """
-  Returns a Islamic date from its parts.
-  """
-  def date(year, month, day), do: {year, month, day}
+    months: [
+      muharram: [1, "Muharram", 30],
+      safar: [2, "Safar", 29],
+      rabi_i: [3, "Rabi I (Rabi al-Awwal", 30],
+      rabi_ii: [4, "Rabi II (Rabi al-Ahir", 29],
+      jumada_i: [5, "Jumada I (Jumada al-Ula", 30],
+      jumada_ii: [6, "Jumada II (Jumada al-Ahira", 29],
+      rajab: [7, "Rajab", 30],
+      sha_ban: [8, "Sha'ban", 29],
+      ramadan: [9, "Ramadan", 30],
+      shawwal: [10, "Shawwal", 29],
+      dhu_al_quada: [11, "Dhu al-Qa'da", 30],
+      dhi_al_hijja: [12, "Dhu al-Hijja", [29, 30]],
+    ],
 
-  @doc """
-  Returns the epoch of the Islamic calendar.
-  """
-  def epoch, do: Calixir.islamic_epoch()
+    weekdays: [
+      al_ahad: [1, "al-ahad", "Sunday"],
+      al_ithnayna: [2, "al-ithnayna", "Monday"],
+      ath_thalatha: [3, "ath-thalatha", "Tuesday"],
+      al_arba_a: [4, "al-arba_a", "Wednesday"],
+      al_hamis: [5, "al-hamis", "Thursday"],
+      al_jum_a: [6, "al-jum‘a", "Friday"],
+      al_sabt: [7, "as-sabt", "Saturday"]
+    ],
 
-  @doc """
-  Converts `source_calendar_date` of the `source_calendar` into the
-  corresponding Islamic date.
-  """
-  def from_date(source_calendar_date, source_calendar) do
-    source_calendar_date |> source_calendar.to_fixed |> from_fixed
+    holidays: [
+      mawlid: ["Mawlid"]
+    ],
+
+    start_of_day: fn -> :sunset end,
+    start_of_calendar: fn -> Calixir.fixed_from_julian(622, 7, 16) end,
+
+    mean_year: fn -> 354 + (11 / 30) end, # Average year length
+    months_in_year: fn _y -> 12 end,
+
+    add_years: fn fixed, years -> fixed + years * (354 + (11 / 30)) |> trunc end,
+    days_in_year: fn y -> Calixir.islamic_leap_year?(y) && 355 || 354 end,
+    leap_year?: fn y -> Calixir.islamic_leap_year?(y) end,
+  ]
+
+  def date_text({year, month, day} = i_date) do
+    weekday = i_date |> to_fixed |> Calixir.day_of_week_from_fixed
+    weekday_name = Enum.at(weekdays(), weekday)
+    month_name = Enum.at(months(), month - 1)
+    "#{day} #{month_name} #{year} AH (yaum #{weekday_name})"
   end
-
-  @doc """
-  Converts the `fixed` date in to the corresponding Islamic date.
-  """
-  def from_fixed(fixed) do
-    Calixir.islamic_from_fixed(fixed)
-  end
-
-  @doc """
-  Converts the Julian Day number `jd` into the corresponding Islamic date.
-  """
-  def from_jd(jd) do
-    jd |> Calixir.fixed_from_jd |> from_fixed
-  end
-
-  @doc """
-  Converts `islamic_date` into the corresponding date of
-  `target_calendar`.
-  """
-  def to_date(islamic_date, target_calendar) do
-    islamic_date |> to_fixed |> target_calendar.from_fixed
-  end
-
-  @doc """
-  Converts `islamic_date` into the corresponding `fixed` date.
-  """
-  def to_fixed(islamic_date) do
-    Calixir.fixed_from_islamic(islamic_date)
-  end
-
-  @doc """
-  Converts `islamic_date` into the corresponding Julian Day number.
-  """
-  def to_jd(islamic_date) do
-    islamic_date |> to_fixed |> Calixir.jd_from_fixed
-  end
-
-  # === Holidays
-
-  @doc """
-  Mawlid.
-  """
-  defdelegate mawlid(g_year), to: Calixir
 
 end

@@ -1,0 +1,81 @@
+defmodule Astronomical do
+  @moduledoc """
+  The `Astronomical` calendar module.
+
+  From [Wikipedia, 2020-07-24](https://en.wikipedia.org/wiki/Astronomical_year_numbering):
+
+  Astronomical year numbering is based on AD/CE year numbering,
+  but follows normal decimal integer numbering more strictly.
+  Thus, it has a year 0; the years before that are designated
+  with negative numbers and the years after that are designated
+  with positive numbers. Astronomers use the Julian calendar for
+  years before 1582, including the year 0, and the Gregorian calendar
+  for years after 1582, as exemplified by Jacques Cassini (1740),
+  Simon Newcomb (1898) and Fred Espenak (2007).
+  """
+  use Calendars, [
+
+    fields: [
+      year: integer,
+      month: 1..12,
+      day: 1..31
+    ],
+
+    epoch: fn -> Calixir.gregorian_epoch() end,
+
+    from_fixed: fn fixed ->
+      if fixed < 577736,
+        do: Calixir.julian_from_fixed(fixed),
+        else: Calixir.gregorian_from_fixed(fixed)
+    end,
+
+    to_fixed: fn caldate -> (
+        {y, m, d} = is_tuple(caldate) && date
+
+
+    ) end,
+
+    to_fixed: fn
+      {_y, _m, _d} = date -> __MODULE__.from_fixed_(date)
+      y, m, d -> __MODULE__.from_fixed_({y, m, d})
+    end,
+
+  ]
+
+  @doc """
+  Returns the switch over date from the Julian to the Gregorian calendar
+  as a fixed day.
+
+  ## Example
+
+      iex>#{__MODULE__}.switch_over()
+      123445
+  """
+  @spec switch_over :: fixed
+  def switch_over() do
+    Calixir.fixed_from_gregorian(1582, 10, 15)
+  end
+
+
+  defp to_fixed_({_year, _month, _day} = date) do
+    fixed = as_fixed(date)
+    if fixed < switch_over(fixed),
+       do: Calixir.fixed_from_julian(year, month, day),
+       else: Calixir.fixed_from_gregorian(year, month, day)
+  end
+
+  defp to_fixed_(year, month, day) do
+    to_fixed_({year, month, day})
+  end
+
+
+  defp leap_year?(caldate) do
+    {year, month, day} = as_date(caldate)
+    cond do
+      year < 1582 -> Calixir.julian_leap_year?(year)
+      year > 1582 -> Calixir.gregorian_leap_year?(year)
+      true -> false
+    end
+  end
+
+end

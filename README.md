@@ -102,10 +102,10 @@ gregorian_from_fixed(fixed) = {year, month, day}  # DR4 62 (2.23)
     
 The `fixed` dates of the `RataDie` calendar form the basis for all calendar 
 conversions in `Calixir` and `Calendars`. 
-- Both, **monotonous** and **cyclical** calendars must have a `from_fixed` function 
+- Both, **monotonic** and **cyclical** calendars must have a `from_fixed` function
 that converts a `fixed` date into their own corresponding dates. 
 
-- In addition, **monotonous** calendars must have a `to_fixed` function 
+- In addition, **monotonic** calendars must have a `to_fixed` function
 that converts their own dates into the corresponding `fixed` dates. 
 
 Additionally, the calendars have two pairs of conversion functions that are just
@@ -214,10 +214,13 @@ defmodule PipelineConverter do
 end
 ``` 
 
-Of course, this works for any combination of monotonous calendars.
+Of course, this works for any combination of monotonic calendars.
 
 
 ## Changelog
+
+### 0.2.0
+- Completely rewritten logic and documentation
 
 ### 0.1.6
 - Added functions `date_text` to Gregorian, Julian, and Hebrew.
