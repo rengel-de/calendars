@@ -219,6 +219,9 @@ Of course, this works for any combination of monotonic calendars.
 
 ## Changelog
 
+### 0.2.1
+- Simplified `atomize` function
+
 ### 0.2.0
 - Completely rewritten logic and documentation
 

@@ -2152,33 +2152,10 @@ defmodule Calendars do
   ##########################################################
 
   def atomize(s) do
-    #TODO  make general algorithm camel_case -> snake_case
-    cond do
-      s == "AkanDayName" -> :akan_day_name
-      s == "ArithmeticFrench" -> :arithmetic_french
-      s == "ArithmeticPersian" -> :arithmetic_persian
-      s == "AstroBahai" -> :astro_bahai
-      s == "AstroHinduLunar" -> :astro_hindu_lunar
-      s == "AstroHinduSolar" -> :astro_hindu_solar
-      s == "AztecTonalpohualli" -> :aztec_tonalpohualli
-      s == "AztecXihuitl" -> :aztec_xihuitl
-      s == "AztecXiuhmolpilli" -> :aztec_xiuhmolpilli
-      s == "BaliPawukon" -> :bali_pawukon
-      s == "HinduLunar" -> :hindu_lunar
-      s == "HinduSolar" -> :hindu_solar
-      s == "ISO" -> :iso
-      s == "LuniSolar" -> :luni_solar
-      s == "MayanHaab" -> :mayan_haab
-      s == "MayanLongCount" -> :mayan_long_count
-      s == "MayanTzolkin" -> :mayan_tzolkin
-      s == "ObservationalHebrew" -> :observational_hebrew
-      s == "ObservationalIslamic" -> :observational_islamic
-      s == "OldHinduLunar" -> :old_hindu_lunar
-      s == "OldHinduSolar" -> :old_hindu_solar
-      s == "RataDie" -> :rata_die
-      s == "SaudiIslamic" -> :saudi_islamic
-      true -> s |> String.downcase |> String.to_atom
-    end
+    Regex.replace(~r|([A-Z][a-z]+)|, s, fn _, x -> "_#{x}" end)
+    |> String.trim_leading("_")
+    |> String.downcase
+    |> String.to_atom
   end
 
   defp get_f(function), do: function |> Code.eval_quoted |> elem(0)
