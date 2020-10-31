@@ -141,17 +141,13 @@ Here is an example for the interactive use of `Calendars`:
 ```
 D:\Projects\calendars>iex -S mix
 Interactive Elixir (1.9.4) - press Ctrl+C to exit (type h() ENTER for help)
-iex(1)> alias Calendars.Gregorian
-Calendars.Gregorian
-iex(2)> g_date = Gregorian.date(2020, 7, 24)
+iex(1)> g_date = Gregorian.date(2020, 7, 24)
 {2020, 7, 24}
-iex(3)> fixed = Gregorian.to_fixed(g_date)
+iex(2)> fixed = Gregorian.to_fixed(g_date)
 737630
-iex(4)> alias Calendars.Julian
-Calendars.Julian
-iex(5)> j_date = Julian.from_fixed(fixed)
+iex(3)> j_date = Julian.from_fixed(fixed)
 {2020, 7, 11}
-iex(6)> Julian.to_date(j_date, Gregorian)
+iex(4)> Julian.to_date(j_date, Gregorian)
 {2020, 7, 24}
 ```
    
@@ -159,8 +155,6 @@ The same example in a module:
 
 ```elixir
 defmodule ExampleConverter do
-
-  alias Calendars.{Gregorian, Julian}
 
   def gregorian_to_julian_conventional do
     g_date = Gregorian.date(2020, 7, 24)  # create Gregorian date 
@@ -174,8 +168,6 @@ Using a pipeline:
 
 ```elixir
 defmodule PipelineConverter do
-
-  alias Calendars.{Gregorian, Julian, Hebrew}
 
   def check_pipeline do
     gregorian_date = Gregorian.date(2020, 7, 24)
