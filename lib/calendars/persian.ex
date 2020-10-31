@@ -25,6 +25,10 @@ defmodule Persian do
       esfand: [12, "Esfand", 29, :leap_month, 30]
     ],
 
+    holidays: [
+      nowruz: ["Nowruz"]
+    ],
+
     calixir_api: [
       persian_epoch: [[], "15.1"],
       tehran: [[], "15.2"],

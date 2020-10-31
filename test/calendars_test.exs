@@ -9,56 +9,11 @@ defmodule CalendarsTest do
 
   alias Calixir.SampleDates, as: Data
 
-  alias Calendars.{
-    AkanDayName,
-    ArithmeticFrench,
-    ArithmeticPersian,
-    Armenian,
-    AstroHinduLunar,
-    AstroHinduSolar,
-    AztecTonalpohualli,
-    AztecXihuitl,
-    Babylonian,
-    Bahai,
-    BaliPawukon,
-    Chinese,
-    Coptic,
-    DayOfWeek,
-    Egyptian,
-    Ethiopic,
-    French,
-    Gregorian,
-    Hebrew,
-    HinduLunar,
-    HinduSolar,
-    Icelandic,
-    Islamic,
-    ISO,
-    JD,
-    Julian,
-    MayanHaab,
-    MayanLongCount,
-    MayanTzolkin,
-    MJD,
-    ObservationalHebrew,
-    ObservationalIslamic,
-    OldHinduLunar,
-    OldHinduSolar,
-    Olympiad,
-    Persian,
-    RataDie,
-    Roman,
-    Samaritan,
-    SaudiIslamic,
-    Tibetan,
-    Unix
-  }
-
   @fixed_dates :jd |> Data.fixed_with |> Enum.map(&(elem(&1, 0)))
   @jd_dates    :jd |> Data.fixed_with |> Enum.map(&(elem(&1, 1)))
   @g_dates     :gregorian |> Data.fixed_with |> Enum.map(&(elem(&1, 1)))
 
-  @monotonous_calendars [
+  @monotonic_calendars [
     ArithmeticFrench,
     ArithmeticPersian,
     Armenian,
@@ -106,23 +61,28 @@ defmodule CalendarsTest do
     Olympiad
   ]
 
-  test "Monotonous Calendars" do
-    for calendar <- @monotonous_calendars do
+  test "monotonic Calendars" do
+    for calendar <- @monotonic_calendars do
       keyword = calendar.keyword()
-      dates = Data.fixed_with(keyword) |> Enum.map(&(elem(&1, 1)))
+      keyword = keyword == :rata_die && :fixed || keyword
+      dates = get_dates(calendar.field_count, keyword)
       test_dates = Enum.zip([@fixed_dates, dates, @jd_dates, @g_dates])
       for {fixed, date, jd, gregorian} <- test_dates do
         assert calendar.from_date(gregorian, Gregorian) == date
         assert calendar.from_fixed(fixed) == date
-        assert calendar.from_jd(jd) == date
+        if calendar != JD do
+          assert calendar.from_jd(jd) == date
+        end
       end
     end
   end
 
-  test "Cyclical Calendars without DayOfWeek" do
+  test "Cyclical Calendars without Weekday" do
     for calendar <- @cyclical_calendars do
       keyword = calendar.keyword()
-      dates = Data.fixed_with(keyword) |> Enum.map(&(elem(&1, 1)))
+      # An ugly hack, because of inconsistent naming in DR4
+      keyword = if keyword == :akan_day_name, do: :akan_name, else: keyword
+      dates = get_dates(calendar.field_count, keyword)
       test_dates = Enum.zip([@fixed_dates, dates, @jd_dates, @g_dates])
       for {fixed, date, jd, gregorian} <- test_dates do
         assert calendar.from_date(gregorian, Gregorian) == date
@@ -132,15 +92,19 @@ defmodule CalendarsTest do
     end
   end
 
-  test "DayOfWeek" do
+  test "Weekday" do
     days = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
-    dates = Data.fixed_with(:weekday) |> Enum.map(&(elem(&1, 1)))
+    dates = get_dates(Weekday.field_count, :weekday)
     test_dates = Enum.zip([@fixed_dates, dates, @jd_dates, @g_dates])
     for {fixed, date, jd, gregorian} <- test_dates do
-      assert Enum.at(days, DayOfWeek.from_date(gregorian, Gregorian)) == date
-      assert Enum.at(days, DayOfWeek.from_fixed(fixed)) == date
-      assert Enum.at(days, DayOfWeek.from_jd(jd)) == date
+      date = elem(date, 0)
+      assert Enum.at(days, elem(Weekday.from_date(gregorian, Gregorian), 0)) == date
+      assert Enum.at(days, elem(Weekday.from_fixed(fixed), 0)) == date
+      assert Enum.at(days, elem(Weekday.from_jd(jd), 0)) == date
     end
   end
+
+  defp get_dates(1, keyword), do: Data.fixed_with(keyword) |> Enum.map(&({elem(&1, 1)}))
+  defp get_dates(_, keyword), do: Data.fixed_with(keyword) |> Enum.map(&(elem(&1, 1)))
 
 end

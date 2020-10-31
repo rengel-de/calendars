@@ -14,7 +14,6 @@ defmodule Weekday do
     from_fixed: fn fixed -> {Calixir.day_of_week_from_fixed(fixed)}  end,
 
     weekdays: [
-      # Data
       sunday: [0, "Sunday", "1.53"],
       monday: [1, "Monday", "1.54"],
       tuesday: [2, "Tuesday", "1.55"],

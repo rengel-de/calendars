@@ -165,9 +165,9 @@ defmodule Calendars do
   end
 
   defp add_spec(%{opts: %{fields: fields}} = spec, :field_data) do
-    date_arity = length(fields)
+    field_count = length(fields)
     field_atoms = Keyword.keys(fields)
-    field_numbers = Enum.to_list(0..(date_arity - 1))
+    field_numbers = Enum.to_list(0..(field_count - 1))
     field_indices = Enum.with_index(field_atoms)
     field_strings = Enum.map(field_atoms, fn e -> "#{e}" end)
     field_string = Enum.join(field_strings, ", ")
@@ -175,7 +175,7 @@ defmodule Calendars do
     field_params = Enum.join(field_strings, ", ")
     field_asts = Enum.map(field_atoms, fn e -> Macro.var(e, nil) end)
     spec
-    |> Map.put(:date_arity, date_arity)
+    |> Map.put(:field_count, field_count)
     |> Map.put(:field_atoms, field_atoms)
     |> Map.put(:field_numbers, field_numbers)
     |> Map.put(:field_indices, field_indices)
@@ -224,7 +224,7 @@ defmodule Calendars do
 
   defp add_spec(%{keyword: keyword, field_asts: args} = spec, :to_fixed_function) do
     f_name = :"fixed_from_#{keyword}"
-    if not function_exported?(Calixir, f_name, spec.date_arity),
+    if not function_exported?(Calixir, f_name, spec.field_count),
        do:   Map.put(spec, :to_fixed, nil),
        else: Map.put(spec, :to_fixed,
          quote do
@@ -640,6 +640,7 @@ defmodule Calendars do
   defp gen_fun(:fields, spec) do
     quote do
       unquote(gen_fun(:date, spec))
+      unquote(gen_fun(:field_count, spec))
       unquote(gen_fun(:field_index, spec))
       unquote(gen_fun(:field_atom, spec))
       unquote(gen_fun(:field_atoms, spec))
@@ -687,6 +688,19 @@ defmodule Calendars do
       """
       @spec field_atoms :: [ atom ]
       def field_atoms, do: unquote(field_atoms)
+    end
+  end
+
+  defp gen_fun(:field_count, %{name: name, field_count: field_count} = spec) do
+    txt = "Returns the number of fields in a #{name} date"
+    io = [nil, field_count]
+    doc = gen_doc(txt, spec.module, :field_count, io)
+    quote do
+      @doc """
+      #{unquote(doc)}
+      """
+      @spec field_count :: integer
+      def field_count, do: unquote(field_count)
     end
   end
 
@@ -1794,8 +1808,9 @@ defmodule Calendars do
   defp gen_fun(:single_holidays, %{name: name, sample: sample, opts: %{holidays: holidays}} = spec) do
     for {holiday, [holiday_name | _]} <- holidays do
       txt = """
-      Returns the date of `#{holiday_name}` of the #{name} calendar in the given
-      `gregorian_year` or `[]`, if there is no such holiday in that year.
+      Returns the fixed date of `#{holiday_name}` of the
+      #{name} calendar in the given `gregorian_year` or `[]`,
+      if there is no such holiday in that year.
       """
       result = "Calixir.#{holiday}(#{sample.g_year})" |> Code.eval_string |> elem(0)
       date = get_greg(result)
@@ -1812,9 +1827,11 @@ defmodule Calendars do
             []
           else
             if is_list(result) do
-              Calixir.gregorian_from_fixed(hd(result))
+              # Calixir.gregorian_from_fixed(hd(result))
+              hd(result)
             else
-              Calixir.gregorian_from_fixed(result)
+              # Calixir.gregorian_from_fixed(result)
+              result
             end
           end
         end

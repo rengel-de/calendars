@@ -8,23 +8,6 @@ defmodule HolidaysTest do
 
   alias Calixir.Holidays
 
-  alias Calendars.{
-    Bahai,
-    BaliPawukon,
-    Chinese,
-    Coptic,
-    Gregorian,
-    Hebrew,
-    HinduLunar,
-    Icelandic,
-    Islamic,
-    Julian,
-    LuniSolar,
-    ObservationalHebrew,
-    Persian,
-    Tibetan,
-    }
-
   test "Advent Sunday - DR4 70 (2.42)" do
     for {year, _month, _day } = date <- Holidays.dates_of_holiday(:advent) do
       fixed = Gregorian.advent(year)
@@ -45,7 +28,7 @@ defmodule HolidaysTest do
         {year, 0, 0} ->
           assert Hebrew.birkath_ha_hama(year) == []
         {year, _, _} -> (
-          fixed = Hebrew.birkath_ha_hama(year) |> hd
+          fixed = Hebrew.birkath_ha_hama(year)
           assert Gregorian.from_fixed(fixed) == date)
       end
     end
@@ -57,7 +40,7 @@ defmodule HolidaysTest do
         {year, 0, 0} ->
           assert Hebrew.alt_birkath_ha_hama(year) == []
         {year, _, _} ->
-          fixed = Hebrew.alt_birkath_ha_hama(year) |> hd
+          fixed = Hebrew.alt_birkath_ha_hama(year)
           assert Gregorian.from_fixed(fixed) == date
       end
     end
@@ -72,14 +55,14 @@ defmodule HolidaysTest do
 
   test "Birthday of Rama - DR4 369 (20.61)" do
     for {year, _, _} = date <- Holidays.dates_of_holiday(:rama) do
-      fixed = HinduLunar.rama(year) |> hd
+      fixed = HinduLunar.rama(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
 
-  test "Chinese New Year - DR4 322 (19.26)" do  # passed
+  test "*** Chinese New Year - DR4 322 (19.26)" do  # passed
     for {year, _month, _day } = date <- Holidays.dates_of_holiday(:chinese_new_year) do
-      fixed = Chinese.new_year(year)
+      fixed = Chinese.chinese_new_year(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
@@ -93,21 +76,21 @@ defmodule HolidaysTest do
 
   test "Christmas (Coptic) - DR4 93 (4.9)" do
     for {year, _, _} = date <- Holidays.dates_of_holiday(:coptic_christmas) do
-      fixed = Coptic.christmas(year) |> hd
+      fixed = Coptic.coptic_christmas(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
 
   test "Christmas (Orthodox) - DR4 85 (3.25)" do
     for {year, _month, _day } = date <- Holidays.dates_of_holiday(:eastern_orthodox_christmas) do
-      fixed = Julian.eastern_orthodox_christmas(year) |> hd
+      fixed = Julian.eastern_orthodox_christmas(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
 
   test "Diwali - DR4 368 (20.57)" do
     for {year, _, _} = date <- Holidays.dates_of_holiday(:diwali) do
-      fixed = HinduLunar.diwali(year) |> hd
+      fixed = HinduLunar.diwali(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
@@ -165,21 +148,21 @@ defmodule HolidaysTest do
 
   test "Friday the 13th (first) - DR4 71 (2.45)" do
     for {year, _month, _day } = date <- Holidays.dates_of_holiday(:unlucky_fridays) do
-      fixed = Gregorian.unlucky_fridays(year) |> hd
+      fixed = Gregorian.unlucky_fridays(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
 
   test "Great Night of Shiva - DR4 369 (20.60)" do
     for {year, _, _} = date <- Holidays.dates_of_holiday(:shiva) do
-      fixed = HinduLunar.shiva(year) |> hd
+      fixed = HinduLunar.shiva(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
 
   test "Hanukkah - DR4 134 (8.43)" do
     for {year, _month, _} = date <- Holidays.dates_of_holiday(:hanukkah) do
-      fixed = Hebrew.hanukkah(year) |> hd
+      fixed = Hebrew.hanukkah(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
@@ -207,21 +190,21 @@ defmodule HolidaysTest do
 
   test "Kajeng Keliwon (first) - DR4 190 (12.16)" do
     for {year, _month, _day } = date <- Holidays.dates_of_holiday(:kajeng_keliwon) do
-      fixed = BaliPawukon.kajeng_keliwon(year) |> hd
+      fixed = BaliPawukon.kajeng_keliwon(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
 
   test "Losar (Tibetan New Year) - DR4 381 (21.9)" do
     for {year, _, _} = date <- Holidays.dates_of_holiday(:tibetan_new_year) do
-      fixed = Tibetan.new_year(year) |> hd
+      fixed = Tibetan.tibetan_new_year(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
 
   test "Mawlid - DR4 109 (7.6)" do  # passed
     for {year, _month, _day } = date <- Holidays.dates_of_holiday(:mawlid) do
-      fixed = Islamic.mawlid(year) |> hd
+      fixed = Islamic.mawlid(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
@@ -242,7 +225,7 @@ defmodule HolidaysTest do
 
   test "Observ. Hebrew 1 Nisan - DR4 297 (18.22)" do  # passed
     for {year, _month, _day } = date <- Holidays.dates_of_holiday(:observational_hebrew_first_of_nisan) do
-      fixed = ObservationalHebrew.first_of_nisan(year)
+      fixed = ObservationalHebrew.observational_hebrew_first_of_nisan(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
@@ -288,7 +271,7 @@ defmodule HolidaysTest do
         {year, 0, 0} ->
           assert HinduLunar.sacred_wednesdays(year) == []
         {year, _, _} -> (
-          fixed = HinduLunar.sacred_wednesdays(year) |> hd
+          fixed = HinduLunar.sacred_wednesdays(year)
           assert Gregorian.from_fixed(fixed) == date)
       end
     end
@@ -296,7 +279,7 @@ defmodule HolidaysTest do
 
   test "Sh'ela - DR4 131 (8.37)" do
     for {year, _month, _} = date <- Holidays.dates_of_holiday(:sh_ela) do
-      fixed = Hebrew.sh_ela(year) |> hd
+      fixed = Hebrew.sh_ela(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end
@@ -317,7 +300,7 @@ defmodule HolidaysTest do
 
   test "Tumpek (first) - DR4 190 (12.17)" do
     for {year, _month, _day } = date <- Holidays.dates_of_holiday(:tumpek) do
-      fixed = BaliPawukon.tumpek(year) |> hd
+      fixed = BaliPawukon.tumpek(year)
       assert Gregorian.from_fixed(fixed) == date
     end
   end

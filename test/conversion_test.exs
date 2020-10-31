@@ -19,46 +19,9 @@ defmodule ConversionTest do
 
   alias Calixir.SampleDates, as: Data
 
-  alias Calendars.{
-    ArithmeticFrench,
-    ArithmeticPersian,
-    Armenian,
-    AstroHinduLunar,
-    AstroHinduSolar,
-    Babylonian,
-    Bahai,
-    Chinese,
-    Coptic,
-    Egyptian,
-    Ethiopic,
-    French,
-    Gregorian,
-    Hebrew,
-    HinduLunar,
-    HinduSolar,
-    Icelandic,
-    Islamic,
-    ISO,
-    JD,
-    Julian,
-    MayanLongCount,
-    MJD,
-    ObservationalHebrew,
-    ObservationalIslamic,
-    OldHinduLunar,
-    OldHinduSolar,
-    Persian,
-    RataDie,
-    Roman,
-    Samaritan,
-    SaudiIslamic,
-    Tibetan,
-    Unix
-    }
-
   @fixed_dates :jd |> Data.fixed_with |> Enum.map(&(elem(&1, 0)))
 
-  @monotonous_calendars [
+  @monotonic_calendars [
     ArithmeticFrench,
     ArithmeticPersian,
     Armenian,
@@ -261,16 +224,17 @@ defmodule ConversionTest do
 
   test "from_fixed, to_fixed" do
     for fixed <- @fixed_dates do
-      for cal <- @monotonous_calendars do
+      for cal <- @monotonic_calendars do
         assert fixed |> cal.from_fixed |> cal.to_fixed == fixed
       end
     end
   end
 
   test "from_jd, to_jd" do
+    calendars = Enum.filter(@monotonic_calendars, fn e -> e != JD end)
     for fixed <- @fixed_dates do
       jd = JD.from_fixed(fixed)
-      for cal <- @monotonous_calendars do
+      for cal <- calendars do
         assert jd |> cal.from_jd |> cal.to_jd == jd
       end
     end

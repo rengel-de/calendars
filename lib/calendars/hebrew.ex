@@ -39,6 +39,7 @@ defmodule Hebrew do
       yom_kippur: ["Yom Kippur", "8.30"],
       passover: ["Passover", "8.31"],
       ta_anit_esther: ["Ta'anit Esther", "8.34"],
+      purim: ["Purim", "8.33"],
       tishah_be_av: ["Tisha be-Av", "8.35"],
       yom_ha_zikkaron: ["Yom ha Zikkaron", "8.36"],
       sh_ela: ["Sh'ela", "8.37"],

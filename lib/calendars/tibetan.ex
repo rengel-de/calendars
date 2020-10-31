@@ -13,7 +13,7 @@ defmodule Tibetan do
     ],
 
     holidays: [
-      losar: ["Losar", "21.8"]
+      tibetan_new_year: ["Losar", "21.9"]
     ],
 
     calixir_api: [

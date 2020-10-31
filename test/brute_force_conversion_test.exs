@@ -11,43 +11,6 @@ defmodule ConversionTest do
 
   alias Calixir.SampleDates, as: Data
 
-  alias Calendars.{
-    ArithmeticFrench,
-    ArithmeticPersian,
-    Armenian,
-    AstroHinduLunar,
-    AstroHinduSolar,
-    Babylonian,
-    Bahai,
-    Chinese,
-    Coptic,
-    Egyptian,
-    Ethiopic,
-    French,
-    Gregorian,
-    Hebrew,
-    HinduLunar,
-    HinduSolar,
-    Icelandic,
-    Islamic,
-    ISO,
-    JD,
-    Julian,
-    MayanLongCount,
-    MJD,
-    ObservationalHebrew,
-    ObservationalIslamic,
-    OldHinduLunar,
-    OldHinduSolar,
-    Persian,
-    RataDie,
-    Roman,
-    Samaritan,
-    SaudiIslamic,
-    Tibetan,
-    Unix
-    }
-
   @fixed_dates :jd |> Data.fixed_with |> Enum.map(&(elem(&1, 0)))
 
   @monotonous_calendars [ # 34 monotonic calendars

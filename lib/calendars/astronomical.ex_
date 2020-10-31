@@ -32,7 +32,6 @@ defmodule Astronomical do
     to_fixed: fn caldate -> (
         {y, m, d} = is_tuple(caldate) && date
 
-
     ) end,
 
     to_fixed: fn

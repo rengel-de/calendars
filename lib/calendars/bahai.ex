@@ -17,6 +17,8 @@ defmodule Bahai do
       birth_of_the_bab: ["Birth of the Bab"],
       naw_ruz: ["Feast of Naw-Ruz"],
       feast_of_ridvan: ["Feast of Ridvan"]
-    ]
+    ],
+
+    new_year: fn y -> Calixir.bahai_new_year(y) end
   ]
 end

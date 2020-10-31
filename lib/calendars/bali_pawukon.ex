@@ -21,8 +21,8 @@ defmodule BaliPawukon do
      ],
 
   holidays: [
-    # kajeng_keliwon: ["Kajeng Keliwon (first)"],
-    # tumpek: ["Tumpek (first)"]
+    kajeng_keliwon: ["Kajeng Keliwon (first)"],
+    tumpek: ["Tumpek (first)"]
     ]
   ]
 end

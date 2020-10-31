@@ -217,7 +217,17 @@ end
 Of course, this works for any combination of monotonic calendars.
 
 
+## On Testing
+
+Be careful when running the tests. The `brute_force_conversion_test`
+might take about half an hour. All the other tests combined take only
+a few minutes.
+
+
 ## Changelog
+
+### 0.2.2
+- Cleaned up tests
 
 ### 0.2.1
 - Simplified `atomize` function
@@ -248,7 +258,7 @@ Of course, this works for any combination of monotonic calendars.
 
 ### 0.1.3
 - Fixed docs in RataDie calendar.
-- Fixed `from_jd` and `to_jd` functions in in RataDie calendar.
+- Fixed `from_jd` and `to_jd` functions in RataDie calendar.
 - Added  `is_leap?` and `days_in_month` functions to Gregorian calendar. 
 - Added  `is_leap?` and `days_in_month` functions to Julian calendar.
  
