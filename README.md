@@ -218,6 +218,9 @@ a few minutes.
 
 ## Changelog
 
+### 0.2.4
+- Added Astronomical calendar
+
 ### 0.2.2
 - Cleaned up tests
 

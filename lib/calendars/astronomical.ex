@@ -29,16 +29,20 @@ defmodule Astronomical do
         else: Calixir.gregorian_from_fixed(fixed)
     end,
 
-    to_fixed: fn caldate -> (
-        {y, m, d} = is_tuple(caldate) && date
-
-    ) end,
-
     to_fixed: fn
-      {_y, _m, _d} = date -> __MODULE__.from_fixed_(date)
-      y, m, d -> __MODULE__.from_fixed_({y, m, d})
+      {y, m, d} when y < 1582 -> Calixir.fixed_from_julian(y, m, d)
+      {y, m, d} when y > 1582 -> Calixir.fixed_from_gregorian(y, m, d)
+      {y, m, d} when m < 10 -> Calixir.fixed_from_julian(y, m, d)
+      {y, m, d} when m > 10 -> Calixir.fixed_from_gregorian(y, m, d)
+      {y, m, d} when d < 15 -> Calixir.fixed_from_julian(y, m, d)
+      {y, m, d} when d > 14 -> Calixir.fixed_from_gregorian(y, m, d)
     end,
 
+    leap_year?: fn
+      year when year < 1582 -> Calixir.julian_leap_year?(year)
+      year when year > 1582 -> Calixir.gregorian_leap_year?(year)
+      _year -> false
+    end
   ]
 
   @doc """
@@ -48,33 +52,11 @@ defmodule Astronomical do
   ## Example
 
       iex>#{__MODULE__}.switch_over()
-      123445
+      577736
   """
   @spec switch_over :: fixed
   def switch_over() do
     Calixir.fixed_from_gregorian(1582, 10, 15)
-  end
-
-
-  defp to_fixed_({_year, _month, _day} = date) do
-    fixed = as_fixed(date)
-    if fixed < switch_over(fixed),
-       do: Calixir.fixed_from_julian(year, month, day),
-       else: Calixir.fixed_from_gregorian(year, month, day)
-  end
-
-  defp to_fixed_(year, month, day) do
-    to_fixed_({year, month, day})
-  end
-
-
-  defp leap_year?(caldate) do
-    {year, month, day} = as_date(caldate)
-    cond do
-      year < 1582 -> Calixir.julian_leap_year?(year)
-      year > 1582 -> Calixir.gregorian_leap_year?(year)
-      true -> false
-    end
   end
 
 end
