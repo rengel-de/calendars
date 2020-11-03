@@ -44,10 +44,10 @@ original algorithms, Nachum Dershowitz and Edward M. Reingold**.
 
 ## About the Calendars
 
-In this software, I distinguish __monotonous__ and __cyclical__ 
+In this software, I distinguish __monotonic__ and __cyclical__ 
 calendars:
 
-A __monotonous__ calendar has a distinct origin or _epoch_ and 
+A __monotonic__ calendar has a distinct origin or _epoch_ and 
 stretches from there (potentially) to negative and positive infinity. 
 All its values or _dates_ are distinct. The most common example is 
 probably the `Gregorian` calendar.
@@ -59,7 +59,7 @@ so that it is not possible, to assign such a value to a distinct point
 in time. The most common example is probably the week with its weekdays. 
 
 One could argue that cycles shouldn't be called 'calendars'. But that's the 
-way they are treated in DR4. So I'm using the attributes _monotonous_ and 
+way they are treated in DR4. So I'm using the attributes _monotonic_ and 
 _cyclical_ to distinguish calendars if and when it matters.
 
 ## About the Calendar Conversions
@@ -217,6 +217,9 @@ a few minutes.
 
 
 ## Changelog
+
+### 0.2.5
+- Some corrections in README.md
 
 ### 0.2.4
 - Added Astronomical calendar
